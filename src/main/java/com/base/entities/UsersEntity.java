@@ -4,26 +4,25 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tbl_account", schema = "travelblogger", catalog = "")
-public class TblAccountEntity {
-    private int idAccount;
+@Table(name = "users", schema = "travelblogger", catalog = "")
+public class UsersEntity {
+    private Integer idAccount;
     private String username;
     private String email;
     private String phoneNumber;
     private String password;
     private String salt;
     private String aliases;
-    private int activeFlag;
-    private long id;
+    private Integer activeFlag;
+    private Long id;
 
     @Id
     @Column(name = "id_account")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getIdAccount() {
+    public Integer getIdAccount() {
         return idAccount;
     }
 
-    public void setIdAccount(int idAccount) {
+    public void setIdAccount(Integer idAccount) {
         this.idAccount = idAccount;
     }
 
@@ -89,21 +88,21 @@ public class TblAccountEntity {
 
     @Basic
     @Column(name = "active_flag")
-    public int getActiveFlag() {
+    public Integer getActiveFlag() {
         return activeFlag;
     }
 
-    public void setActiveFlag(int activeFlag) {
+    public void setActiveFlag(Integer activeFlag) {
         this.activeFlag = activeFlag;
     }
 
     @Basic
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -111,16 +110,16 @@ public class TblAccountEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TblAccountEntity that = (TblAccountEntity) o;
-        return idAccount == that.idAccount &&
-                activeFlag == that.activeFlag &&
-                id == that.id &&
+        UsersEntity that = (UsersEntity) o;
+        return Objects.equals(idAccount, that.idAccount) &&
                 Objects.equals(username, that.username) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(phoneNumber, that.phoneNumber) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(salt, that.salt) &&
-                Objects.equals(aliases, that.aliases);
+                Objects.equals(aliases, that.aliases) &&
+                Objects.equals(activeFlag, that.activeFlag) &&
+                Objects.equals(id, that.id);
     }
 
     @Override

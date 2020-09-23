@@ -1,29 +1,32 @@
 package com.base.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "travelblogger", catalog = "")
+@Data // lombok
 public class UsersEntity {
-    private Integer idAccount;
+    private Long id;
     private String username;
     private String email;
     private String phoneNumber;
     private String password;
     private String salt;
+    private Integer role;
     private String aliases;
     private Integer activeFlag;
-    private Long id;
 
     @Id
-    @Column(name = "id_account")
-    public Integer getIdAccount() {
-        return idAccount;
+    @Column(name = "id")
+    public Long getId() {
+        return id;
     }
 
-    public void setIdAccount(Integer idAccount) {
-        this.idAccount = idAccount;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Basic
@@ -77,6 +80,16 @@ public class UsersEntity {
     }
 
     @Basic
+    @Column(name = "role")
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    @Basic
     @Column(name = "aliases")
     public String getAliases() {
         return aliases;
@@ -96,34 +109,24 @@ public class UsersEntity {
         this.activeFlag = activeFlag;
     }
 
-    @Basic
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsersEntity that = (UsersEntity) o;
-        return Objects.equals(idAccount, that.idAccount) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(username, that.username) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(phoneNumber, that.phoneNumber) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(salt, that.salt) &&
+                Objects.equals(role, that.role) &&
                 Objects.equals(aliases, that.aliases) &&
-                Objects.equals(activeFlag, that.activeFlag) &&
-                Objects.equals(id, that.id);
+                Objects.equals(activeFlag, that.activeFlag);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idAccount, username, email, phoneNumber, password, salt, aliases, activeFlag, id);
+        return Objects.hash(id, username, email, phoneNumber, password, salt, role, aliases, activeFlag);
     }
 }

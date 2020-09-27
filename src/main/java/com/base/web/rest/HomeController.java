@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @RestController
@@ -49,18 +50,18 @@ public class HomeController {
 
     // Api /api/random yêu cầu phải xác thực mới có thể request
     @GetMapping("/random")
-    public RandomStuff randomStuff(){
+    public RandomStuff randomStuff() {
         return new RandomStuff("JWT Hợp lệ mới có thể thấy được message này");
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<UsersEntity> addUser(@Validated(value = Add.class) @RequestBody UsersDto dto){
-        UsersEntity entity = new UsersEntity();
-        entity.setEmail(dto.getEmail());
-        return ResponseEntity.ok(entity);
-    }
+//    @PostMapping("/users")
+//    public ResponseEntity<UsersEntity> addUser(@Validated(value = Add.class) @RequestBody UsersDto dto){
+//        UsersEntity entity = new UsersEntity();
+//        entity.setEmail(dto.getEmail());
+//        return ResponseEntity.ok(entity);
+//    }
 
-//    @GetMapping("/random")
+    //    @GetMapping("/random")
 //    public RandomStuff randomStuff(){
 //        return new RandomStuff("JWT Hợp lệ mới có thể thấy được message này");
 //    }
@@ -69,4 +70,18 @@ public class HomeController {
 //    public RandomStuff randomStuff(){
 //        return new RandomStuff("JWT Hợp lệ mới có thể thấy được message này");
 //    }
+    @GetMapping("/user")
+    public RandomStuff getUsers() {
+        return new RandomStuff("User mới có thể thấy được message này");
+    }
+
+    @GetMapping("/admin")
+    public RandomStuff getAdmins() {
+        return new RandomStuff("Admin mới có thể thấy được message này");
+    }
+
+    @GetMapping("/all-view")
+    public RandomStuff allView() {
+        return new RandomStuff("Everyone đều thấy được message này");
+    }
 }

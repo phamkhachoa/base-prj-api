@@ -16,8 +16,13 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Mặc định mình sẽ để tất cả là ROLE_USER. Để demo cho đơn giản.
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        if (user.getRole() == 1) {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else if (user.getRole() == 2) {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
+        }
     }
 
     @Override

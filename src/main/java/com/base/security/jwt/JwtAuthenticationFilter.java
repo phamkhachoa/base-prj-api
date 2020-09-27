@@ -1,6 +1,8 @@
 package com.base.security.jwt;
 
 import com.base.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +33,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // Lấy jwt từ request
             String jwt = getJwtFromRequest(request);
 
+//            Claims claims = getAllClaimsFromToken(jwt);
+//            System.out.println(claims.get("username"));
+
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 // Lấy id user từ chuỗi jwt
                 Long userId = tokenProvider.getUserIdFromJWT(jwt);
@@ -59,5 +64,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return bearerToken.substring(7);
         }
         return null;
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey("lodaaaaaa")
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            //LOGGER.error("Could not get all claims Token from passed token");
+            claims = null;
+        }
+        return claims;
     }
 }

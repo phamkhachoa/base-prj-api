@@ -1,14 +1,17 @@
 package com.base.web.rest;
 
 import com.base.service.dto.UsersDto;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/student")
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class PermissionController {
     @RequestMapping(value = {"/get-data"}, method = RequestMethod.POST)
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")

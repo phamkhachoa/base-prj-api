@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class MenusDto {
-    private Integer menuId;
+    private Integer id;
     private String menuCode;
     private String menuAction;
 }

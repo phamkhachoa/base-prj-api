@@ -6,6 +6,7 @@ import com.base.entities.UsersEntity;
 import com.base.repositories.IMenusRepository;
 import com.base.repositories.IPermissionRepository;
 import com.base.repositories.IUsersRepository;
+import com.base.service.CustomUserDetails;
 import com.base.service.IAppAuthorizer;
 import com.base.service.dto.MenusDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,22 +41,24 @@ public class AppAuthorizer implements IAppAuthorizer {
     @Override
     public boolean authorize(Authentication authentication, String action, Object callerObj) throws Exception {
         String securedPath = extractSecuredPath(callerObj);
-        if (securedPath == null || "".equals(securedPath.trim())) {//login, logout
-            return true;
-        }
-        String menuCode = securedPath.substring(1);//Bỏ dấu "/" ở đầu Path
+//        if (securedPath == null || "".equals(securedPath.trim())) {//login, logout
+//            return true;
+//        }
+//        String menuCode = securedPath.substring(1);//Bỏ dấu "/" ở đầu Path
         AtomicBoolean isAllow = new AtomicBoolean(false);
         try {
             UsernamePasswordAuthenticationToken user = (UsernamePasswordAuthenticationToken) authentication;
             if (user == null) {
                 return isAllow.get();
             }
-            String userId = (String) user.getPrincipal();
-            if (userId == null || "".equals(userId.trim())) {
+//            UsersEntity entity = user.getPrincipal();
+            CustomUserDetails customUserDetails = (CustomUserDetails) user.getPrincipal();
+            Long userId = customUserDetails.getUserId();
+            if (userId == null ) {
                 return isAllow.get();
             }
             //Truy vấn vào CSDL theo userId + menuCode + action
-            this.getAllPermissionByUserId(Long.parseLong(userId)).forEach(e -> {
+            this.getAllPermissionByUserId(userId).forEach(e -> {
                 if (action.equals(e.getMenuAction())) isAllow.set(true);
             });
         } catch (Exception e) {
@@ -93,7 +96,7 @@ public class AppAuthorizer implements IAppAuthorizer {
 
         List<MenusDto> dtos = new ArrayList<>();
         menusEntities.forEach(e -> {
-            dtos.add(new MenusDto(e.getMenuId(), e.getMenuCode(), e.getMenuAction()));
+            dtos.add(new MenusDto(e.getId(), e.getMenuCode(), e.getMenuAction()));
         });
 
         return dtos;

@@ -1,29 +1,26 @@
 package com.base.entities;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "menus", schema = "travelblogger", catalog = "")
-@Data // lombok
 public class MenusEntity {
-    private Integer menuId;
+    private Integer id;
     private String menuCode;
     private String menuAction;
 
     @Id
-    @Column(name = "menu_id")
-    public Integer getMenuId() {
-        return menuId;
+    @Column(name = "id")
+    public Integer getId() {
+        return id;
     }
 
-    public void setMenuId(Integer menuId) {
-        this.menuId = menuId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @Id
+    @Basic
     @Column(name = "menu_code")
     public String getMenuCode() {
         return menuCode;
@@ -33,7 +30,7 @@ public class MenusEntity {
         this.menuCode = menuCode;
     }
 
-    @Id
+    @Basic
     @Column(name = "menu_action")
     public String getMenuAction() {
         return menuAction;
@@ -48,13 +45,13 @@ public class MenusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MenusEntity that = (MenusEntity) o;
-        return Objects.equals(menuId, that.menuId) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(menuCode, that.menuCode) &&
                 Objects.equals(menuAction, that.menuAction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(menuId, menuCode, menuAction);
+        return Objects.hash(id, menuCode, menuAction);
     }
 }

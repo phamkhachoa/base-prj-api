@@ -20,6 +20,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>5.2.9.RELEASE</version>
+        </dependency>
+
         <!-- JWT -->
         <dependency>
             <groupId>com.nimbusds</groupId>
